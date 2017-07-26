@@ -27,6 +27,7 @@ class RecipeEditor extends PureComponent {
       vegetarian,
       pescatarian,
       photo,
+      errors: {}
     }
   }
 
@@ -46,7 +47,7 @@ class RecipeEditor extends PureComponent {
     })
   }
 
-  updateIntro(text, medium) {
+  updateIntro(text) {
     this.setState({
       summary: text
     })
@@ -61,7 +62,7 @@ class RecipeEditor extends PureComponent {
     })
   }
 
-  saveRecipe() {
+  recipeState() {
     const {
       title,
       summary,
@@ -71,20 +72,42 @@ class RecipeEditor extends PureComponent {
       photo,
     } = this.state
 
-    const recipe = {
+    return {
       title,
-      summary: toMarkdown(summary),
+      summary,
       vegetarian,
       vegan,
       pescatarian,
-      liked: false,
-      photo,
+      photo
     }
+  }
 
-    this.props.createRecipe(recipe)
+  isValid() {
+    const recipe = this.recipeState()
+
+    let errors = {}
+
+    if (!recipe.title) errors.title = 'Please provide a title!'
+    if (!recipe.summary) errors.summary = 'Please provide a summary!'
+    if (!recipe.photo) errors.photo = 'Please provide a photo!'
+
+    this.setState({ errors })
+
+    return Object.keys(errors).length === 0
+  }
+
+  saveRecipe() {
+    if (!this.isValid()) return
+
+    const recipe = this.recipeState()
+
+    this.props.createRecipe(
+      Object.assign({}, recipe, { summary: toMarkdown(recipe.summary)}))
   }
 
   render() {
+    const { errors } = this.state
+
     return (
       <div className="editor">
         <input
@@ -95,6 +118,7 @@ class RecipeEditor extends PureComponent {
           defaultValue={this.state.title}
           onChange={this.updateTitle.bind(this)}
           onKeyDown={this.updateTitle.bind(this)} />
+        <p>{errors.title}</p>
 
         <Editor
           ref="summary"
@@ -103,6 +127,7 @@ class RecipeEditor extends PureComponent {
           }}
           onChange={this.updateIntro.bind(this)}
           text={this.state.summary} />
+        <p>{errors.summary}</p>
 
         <input
           type="text"
@@ -112,6 +137,7 @@ class RecipeEditor extends PureComponent {
           defaultValue={this.state.photo}
           onChange={this.updatePhoto.bind(this)}
           onKeyDown={this.updatePhoto.bind(this)} />
+        <p>{errors.photo}</p>
 
         {TYPES.map((type) => {
           return <label key={type} htmlFor={type}>
