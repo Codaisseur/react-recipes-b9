@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import seedRecipes from '../actions/recipes/seed'
 import Title from '../components/Title'
 import RecipeItem from './RecipeItem'
+import RecipeEditor from './RecipeEditor'
 import './RecipesContainer.css'
 
 export class RecipesContainer extends PureComponent {
@@ -28,6 +29,7 @@ export class RecipesContainer extends PureComponent {
       <div className="recipes wrapper">
         <header>
           <Title content="Recipes" />
+          <RecipeEditor />
         </header>
 
         <main>
