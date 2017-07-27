@@ -1,11 +1,11 @@
 // src/reducers/recipes.js
-import { SEED_RECIPES } from '../actions/recipes/seed'
+import { FETCHED_RECIPES } from '../actions/recipes/fetch'
 import { UPDATE_RECIPE } from '../actions/recipes/update'
 import { CREATE_RECIPE } from '../actions/recipes/create'
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
-    case SEED_RECIPES :
+    case FETCHED_RECIPES :
       return [].concat(payload)
 
     case CREATE_RECIPE :

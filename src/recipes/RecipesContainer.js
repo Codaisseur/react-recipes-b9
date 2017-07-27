@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import seedRecipes from '../actions/recipes/seed'
+import fetchRecipes from '../actions/recipes/fetch'
 import Title from '../components/Title'
 import RecipeItem from './RecipeItem'
 import RecipeEditor from './RecipeEditor'
@@ -11,11 +11,11 @@ import './RecipesContainer.css'
 export class RecipesContainer extends PureComponent {
   static propTypes = {
     recipes: PropTypes.array.isRequired,
-    seedRecipes: PropTypes.func.isRequired,
+    fetchRecipes: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    this.props.seedRecipes()
+    this.props.fetchRecipes()
   }
 
   renderRecipe(recipe, index) {
@@ -46,4 +46,4 @@ const mapStateToProps = (store) => {
   }
 }
 
-export default connect(mapStateToProps, { seedRecipes })(RecipesContainer)
+export default connect(mapStateToProps, { fetchRecipes })(RecipesContainer)

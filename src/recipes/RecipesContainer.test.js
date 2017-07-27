@@ -13,15 +13,15 @@ chai.use(chaiEnzyme())
 chai.use(spies)
 
 describe('<RecipesContainer />', () => {
-  const seedRecipes = chai.spy()
+  const fetchRecipes = chai.spy()
   const container = shallow(
     <RecipesContainer
-      seedRecipes={seedRecipes}
+      fetchRecipes={fetchRecipes}
       recipes={recipes} />
   )
 
   it('calls seedRecipes on willMount', () => {
-    expect(seedRecipes).to.have.been.called.exactly.once()
+    expect(fetchRecipes).to.have.been.called.exactly.once()
   })
 
   it('is wrapped in a div with class name "recipes"', () => {
