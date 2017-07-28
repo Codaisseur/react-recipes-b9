@@ -11,6 +11,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import App from './App';
 import RecipesContainer from './recipes/RecipesContainer'
 import RecipePage from './recipes/RecipePage'
+import SignIn from './users/SignIn'
+import SignUp from './users/SignUp'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -22,6 +24,8 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={RecipesContainer} />
         <Route path="/recipes/:recipeId" component={RecipePage} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/sign-in" component={SignIn} />
       </Route>
     </Router>
   </Provider>,

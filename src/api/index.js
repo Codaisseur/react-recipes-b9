@@ -34,8 +34,7 @@ class API {
     return this.app.service(serviceName)
   }
 
-  authenticate(user) {
-    const { email, password } = user
+  authenticate({ email, password }) {
     return this.app.authenticate(
       Object.assign({}, { strategy: 'local' }, {
       email,
