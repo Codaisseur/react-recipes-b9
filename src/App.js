@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import RecipesContainer from './recipes/RecipesContainer'
+import PropTypes from 'prop-types'
 import Loading from './components/Loading'
 import LoadError from './components/LoadError'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import muiTheme from './styles/theme'
 import './App.css'
 
 class App extends Component {
+  static childContextTypes = {
+    muiTheme: PropTypes.object.isRequired,
+  }
+
+  getChildContext() {
+    return { muiTheme }
+  }
+
   render() {
     return (
-      <div className="App">
-        <Loading />
-        <LoadError />
-        <RecipesContainer />
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="App">
+          <Loading />
+          <LoadError />
+          { this.props.children }
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
