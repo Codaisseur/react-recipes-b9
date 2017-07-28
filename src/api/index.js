@@ -40,6 +40,12 @@ class API {
       email,
       password,
     }))
+    .then((response) => {
+      return this.app.passport.verifyJWT(response.accessToken);
+    })
+    .then((payload) => {
+      return this.app.service('users').get(payload.userId);
+    })
   }
 
   signOut() {

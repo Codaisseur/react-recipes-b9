@@ -21,13 +21,29 @@ const buttonStyle = {
 }
 
 export class SignIn extends PureComponent {
+  static propTypes = {
+    signedIn: PropTypes.bool,
+    signIn: PropTypes.func.isRequired,
+  }
+
+  componentWillMount() {
+    if (this.props.signedIn) {
+      history.replace('/')
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.signedIn) {
+      history.push('/')
+    }
+  }
+
   submitForm(event) {
     const user = {
       email: this.refs.email.getValue(),
       password: this.refs.password.getValue()
     }
     this.props.signIn(user)
-
   }
 
   signUp() {
@@ -60,4 +76,8 @@ export class SignIn extends PureComponent {
   }
 }
 
-export default connect(null, { signIn })(SignIn)
+const mapStateToProps = ({ currentUser }) => ({
+  signedIn: !!currentUser
+})
+
+export default connect(mapStateToProps, { signIn })(SignIn)

@@ -21,6 +21,10 @@ const buttonStyle = {
 }
 
 export class SignUp extends PureComponent {
+  static propTypes = {
+    signUp: PropTypes.func.isRequired,
+  }
+
   state = { errors: {} }
 
   submitForm(event) {
