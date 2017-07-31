@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import updateRecipe from '../actions/recipes/update'
+import toggleLike from '../actions/recipes/toggleLike'
 import LikeButton from '../components/LikeButton'
 import RecipeCategory from './RecipeCategory'
 import './RecipeItem.css'
@@ -18,12 +18,13 @@ export class RecipeItem extends PureComponent {
     vegan: PropTypes.bool,
     vegetarian: PropTypes.bool,
     pescatarian: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
+    toggleLike: PropTypes.func.isRequired,
+    likedBy: PropTypes.array.isRequired,
   }
 
   toggleLike() {
-    const { _id, liked } = this.props
-    this.props.onChange(_id, { liked: !liked })
+    const { _id } = this.props
+    this.props.toggleLike(_id)
   }
 
   render() {
@@ -55,4 +56,8 @@ export class RecipeItem extends PureComponent {
   }
 }
 
-export default connect(null, { onChange: updateRecipe })(RecipeItem)
+const mapStateToProps = ({ currentUser }, { likedBy }) => ({
+  liked: likedBy.filter((lId) => (lId === currentUser._id)).length > 0
+})
+
+export default connect(mapStateToProps, { toggleLike })(RecipeItem)
