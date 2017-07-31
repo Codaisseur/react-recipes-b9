@@ -28,7 +28,7 @@ export class RecipeItem extends PureComponent {
   }
 
   render() {
-    const { _id, title, summary, vegan, vegetarian, pescatarian, liked, photo } = this.props
+    const { _id, title, summary, vegan, vegetarian, pescatarian, liked, photo, likedBy } = this.props
 
     const categories = { vegan, vegetarian, pescatarian }
 
@@ -49,7 +49,7 @@ export class RecipeItem extends PureComponent {
           <p>{ summary }</p>
         </div>
         <footer>
-          <LikeButton onChange={this.toggleLike.bind(this)} liked={liked} />
+          <LikeButton onChange={this.toggleLike.bind(this)} liked={liked} likes={likedBy} />
         </footer>
       </article>
     )
